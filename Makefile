@@ -9,7 +9,7 @@ HEADERINSTALLDIR = /usr/local/include/
 CC = g++
 LDFLAGS = -lwxfreq -pthread -L$(LIB64) -I $(dir $(INCLUDE))
 CPPFLAGS = $(CFLAGS)
-CPPFLAGS += -g -O2  -std=c++11
+CPPFLAGS += -g -O2 -Wall -std=c++11
 INC = -I ./util -I ./freq
 
 CPPFILE += $(wildcard freq/*.cpp)

@@ -65,7 +65,6 @@ int RuleManager::LoadFile() {
   gLog("[%s][%d]: Load confile %s\n",
       __FILE__, __LINE__, rule_conf_file_.c_str());
   Config cfg(rule_conf_file_);
-  int ret = 0;
   if (cfg.Init() != 0) {
     gLog("[%s][%d]: int confile %s failed\n",
         __FILE__, __LINE__, rule_conf_file_.c_str());
@@ -79,7 +78,7 @@ int RuleManager::LoadFile() {
   cfg.section_list(sectionList);
   for (std::vector<std::string>::iterator it = sectionList.begin();
       it != sectionList.end(); ++it) {
-      if (*it != "appid") ret = InsertRule(cfg, it->c_str());
+      if (*it != "appid") InsertRule(cfg, it->c_str());
   }
 
   AppidManager::UpdateAppidMeta(cfg);

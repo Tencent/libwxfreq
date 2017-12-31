@@ -42,9 +42,9 @@ class PlainExpression: public Expression {
       key_index_(key_index) { }
 
   // parse item
+  cmp cmp_;
   unsigned int threshold_;
   uint8_t key_index_;
-  cmp cmp_;
 };
 
 }  // namespace libwxfreq

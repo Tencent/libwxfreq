@@ -38,7 +38,7 @@ static bool GreaterOrEqual(const FreqItem& freqitem, const unsigned int index,
 }
 
 bool PlainExpression::ParseItem(const std::string& item) {
-  char *ptr = NULL;
+  const char *ptr = NULL;
   ptr = strstr(item.c_str(), ">");
   if (ptr == NULL) return false;
   Slice keyword(item.c_str(), ptr);
@@ -80,8 +80,8 @@ std::string PlainExpression::DebugString() const {
   else if (cmp_ == Greater) op = "Greater";
 
   char buf[128];
-  snprintf(buf, sizeof(buf), "key_index:%u\tthreshold:%u\tcmp:%s\taddr:%x",
-          key_index_, threshold_, op.c_str(), cmp_);
+  snprintf(buf, sizeof(buf), "key_index:%u\tthreshold:%u\tcmp:%s\taddr:%lx",
+          key_index_, threshold_, op.c_str(), (unsigned long int)cmp_);
 
   return std::string(buf);
 }

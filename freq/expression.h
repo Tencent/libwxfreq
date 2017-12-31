@@ -23,6 +23,7 @@ namespace libwxfreq {
 
 class Expression {
  public:
+  virtual ~Expression() {}
   virtual bool ParseItem(const std::string& item) = 0;
   virtual bool IsMatch(const FreqItem& freqitem) const = 0;
   virtual std::string DebugString() const = 0;
