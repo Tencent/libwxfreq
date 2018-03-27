@@ -1,4 +1,5 @@
 NAME = libwxfreq 
+SERVERNAME = freq 
 LIBNAME = libwxfreq.a
 OUTPUTDIR = ./output
 INCLUDE = $(OUTPUTDIR)/include/$(NAME)
@@ -9,16 +10,26 @@ HEADERINSTALLDIR = /usr/local/include/
 CC = g++
 LDFLAGS = -lwxfreq -pthread -L$(LIB64) -I $(dir $(INCLUDE))
 CPPFLAGS = $(CFLAGS)
-CPPFLAGS += -g -O2 -Wall -std=c++11
-INC = -I ./util -I ./freq
+CPPFLAGS += -g -O0 -Wall -std=c++11
+INC = -I ./util -I ./freq -I ./net --std=c++11
 
 CPPFILE += $(wildcard freq/*.cpp)
 CPPFILE += $(wildcard util/*.cpp)
 OBJ = $(patsubst %.cpp,  %.o, $(CPPFILE))
 DFILE = $(patsubst %.o,  %.d, $(OBJ))
 
+NETCPPFILE += main.cpp
+NETCPPFILE += $(wildcard net/*.cpp)
+NETOBJ = $(patsubst %.cpp,  %.o, $(NETCPPFILE))
+NETDFILE = $(patsubst %.o,  %.d, $(NETOBJ))
+
 
 .PHONY : all clean test
+
+$(SERVERNAME) : $(OBJ) $(NETOBJ) main.o
+	@rm -rf $(DFILE)
+	@rm -rf $(NETDFILE)
+	$(CC) $(CPPFLAGS)  $^ -o $@.out -pthread -levent -lrt -static -L /data1/mm64/arthurzou/archive
 
 $(LIBNAME) : $(OBJ)
 	@rm -rf $(OUTPUTDIR)
@@ -37,6 +48,7 @@ $(LIBNAME) : $(OBJ)
 
 
 -include $(DFILE)
+-include $(NETDFILE)
 
 %.d: %.cpp
 	@$(CC) $(INC) -MT $*.o -MM $< > $@ && \
@@ -44,7 +56,7 @@ $(LIBNAME) : $(OBJ)
 
 clean:
 	@echo -n "clean workspace ..."
-	@rm  -rf $(OUTPUTDIR) $(OBJ) $(DFILE) *.out
+	@rm  -rf $(OUTPUTDIR) $(OBJ) $(NETOBJ) $(NETDFILE) $(DFILE) *.out
 	@echo -e "\t\t\033[31m[done]\033[0m"
 
 install: $(LIBNAME)
