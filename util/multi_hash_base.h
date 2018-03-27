@@ -230,7 +230,6 @@ int MultiHashBase<Key, Value>::GetValueForWrite(const KeyType &input_key,
         value = value_in_mem;
         break;
       }
-      continue;
     } else if (IsExpired(*key_in_mem, *value_in_mem, &timestamp) == true) {
       if (ExpiredOccupy(input_key, *key_in_mem, *value_in_mem, &timestamp) == true) {
         memset(reinterpret_cast<void *>(value_in_mem), 0 , sizeof(ValueType));
@@ -238,7 +237,6 @@ int MultiHashBase<Key, Value>::GetValueForWrite(const KeyType &input_key,
         value = value_in_mem;
         break;
       }
-      continue;
     }
     offset += size_meta_[find_level] * item_size_;
   }
