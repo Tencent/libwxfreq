@@ -1,7 +1,8 @@
 # libwxfreq
 
 ## 编译
-  make
+  1. 编译lib make libwxfreq.a
+  2. 编译server， 依赖libevent库，所以要修改DIRLIBEVENT变量为libevent.a所在目录，并确定libevent相关头文件在头文件搜索路径中， 运行make
 
 ## 安装
   1. 修改makefile文件中的HEADERINSTALLDIR和LIBINSTALLDIR变量
